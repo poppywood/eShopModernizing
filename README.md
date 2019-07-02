@@ -4,12 +4,12 @@
 This repo provides three sample hypothetical legacy eShop web apps (traditional ASP.NET WebForms and MVC in .NET Framework and an N-Tier app based on a WCF service and a client WinForms desktop app) and how you can modernize them (Lift and Shift scenario) with Windows Containers and Azure Cloud into the following deployment options:
 
 - Local build and deployment in dev PC with Visual Studio and Docker for Windows
-- Azure Container Instances
+- Azure Container Instances (ACI)
 - Regular Windows Server 2016 VM (Virtual Machine)
-- Azure App Service with Windows Containers support (In Private Preview)
 - ACS-Kubernetes orchestrator cluster
 - Service Fabric orchestrators cluster
-- Service Fabric Mesh (In Private Preview)
+- Azure App Service with Windows Containers support (In Private Preview, not documented here, yet)
+- Service Fabric Mesh (In Private Preview, not documented here, yet)
 
 All those mentioned environments can be deployed into Azure cloud (as explained in the Wiki) but you can also deploy all those environments into on-premises servers or even in other public clouds.
 
@@ -20,9 +20,9 @@ You can download its related guidance with this free guide/eBook (2nd Edition up
 
 .PDF download (PC) - 2nd Edition: https://aka.ms/liftandshiftwithcontainersebook
 
-.MOBI download (Kindle) - 1st Edition: https://aka.ms/liftandshiftwithcontainersebookmobi
+.MOBI download (Kindle) - 2nd Edition: https://aka.ms/liftandshiftwithcontainersebookmobi
 
-.EPUB download (Other eReaders) - 1st Edition: https://aka.ms/liftandshiftwithcontainersebookepub
+.EPUB download (Other eReaders) - 2nd Edition: https://aka.ms/liftandshiftwithcontainersebookepub
 
 The modernization with Windows Containers significantly improves the deployments for DevOps, without having to change the app's architecture or C# code.
 
@@ -62,9 +62,11 @@ The winforms application is a catalog management, and uses a WCF as a back-end. 
 ![image](https://user-images.githubusercontent.com/1712635/30446445-094e998a-993e-11e7-96d8-ed1dd9fef142.png)
 
 
-## Quick start: Running all apps together in your local Windows 10 PC with "Docker for Windows" and VS 2017
+## Quick start: Running all apps together in your local Windows 10 PC with "Docker for Windows"
 
-You have more detailed procedures at the [Wiki](https://github.com/dotnet-architecture/eShopModernizing/wiki), but for the quickest way to get started and run all samples together using Docker for Windows, open a **"Developer Command Prompt for VS 2017"** (to ensure you have right `msbuild` on `PATH`), go to the eShopModernizing root folder and run the `build.cmd` script. 
+You have more detailed procedures at the [Wiki](https://github.com/dotnet-architecture/eShopModernizing/wiki), but for the quickest way to get started and run all samples together using Docker for Windows, open a **"Developer Command Prompt for VS 2017 (or 2019)"** (to ensure you have right `msbuild` on `PATH`), go to the eShopModernizing root folder and run the `build.cmd` script.
+
+**Note: The current version uses netcoreapp3.0. You will need to instll the preview SDK and set Visual Studio to 'Use previews of the .NET Core SDK (under Options - Projects and Solutions - .NET Core).**
 
 This script will:
 
@@ -80,7 +82,7 @@ You can check the just created Docker images by running `docker images` from the
 
 ![image](https://user-images.githubusercontent.com/1712635/38949583-a2c11ba2-42f7-11e8-9c10-b74f2a005186.png)
 
-Finally just run `docker-compose up` (in the root of the repo) to start all three projects and one SQL Server container. Once containers are started:
+Finally just run `docker-compose up` (in the root of the repo) to start all three projects and one SQL Server container. Once the containers are started:
 
 * MVC web app listens in: 
      - Port 5115 on the Docker Host (PC) network card IP
@@ -92,9 +94,9 @@ Finally just run `docker-compose up` (in the root of the repo) to start all thre
      - Port 5113 on the Docker Host (PC) network card IP
      - Port 80 on the internal container's IP
 
->**Note** You should be able to use `http://localhost:<port>` to access the desired application but **due to a current limitation of Windows Containers this won't probably work (See belo the section "The localhost loopback limitation in Windows Containers Docker hosts")**. 
+>**Note** You should be able to use `http://localhost:<port>` to access the desired application. 
 
-In order to test the apps/containers from within the Docker host itself (the dev Windows PC) yu need to use the internal IP (container's IP) to access the application. To find the internal IP, just type  `docker ps` to find the container ids:
+In order to test the apps/containers from within the Docker host itself (the dev Windows PC) you need to use the internal IP (container's IP) to access the application. To find the internal IP, just type  `docker ps` to find the container ids:
 
 ![docker ps output](./assets/docker-ps.png)
 
